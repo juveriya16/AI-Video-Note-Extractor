@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Video Learning Assistant</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Segoe UI',sans-serif;
+
+    background: linear-gradient(
+        -45deg,
+        #0f172a,
+        #111827,
+        #1e1b4b,
+        #0f172a
+    );
+
+    background-size:400% 400%;
+    animation:gradientMove 12s ease infinite;
+    padding:20px;
+}
+
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+.glass-card{
+    width:900px;
+    max-width:95%;
+    padding:25px 35px;
+
+    border-radius:25px;
+
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,0.15);
+
+    box-shadow:0 8px 32px rgba(0,0,0,0.35);
+
+    text-align:center;
+}
+
+.logo{
+    font-size:50px;
+    animation:float 3s ease infinite;
+}
+
+@keyframes float{
+    0%,100%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-8px);
+    }
+}
+
+.title{
+    color:white;
+    font-size:42px;
+    font-weight:800;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#cbd5e1;
+    font-size:15px;
+    margin-bottom:20px;
+}
+
+.stats{
+    display:flex;
+    justify-content:space-around;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.stat-box{
+    color:white;
+    font-size:14px;
+    padding:8px;
+}
+
+.stat-number{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.form-control{
+    background:#e2e8f0;
+    border:none;
+    border-radius:12px;
+}
+
+.upload-box{
+    border:2px dashed #38bdf8;
+    padding:20px;
+    border-radius:20px;
+    transition:0.3s;
+}
+
+.upload-box:hover{
+    background:rgba(255,255,255,0.05);
+}
+
+.form-control::file-selector-button{
+    background:#3b82f6;
+    color:white;
+    border:none;
+}
+
+.generate-btn{
+    margin-top:20px;
+    width:100%;
+    border:none;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    font-size:16px;
+    font-weight:bold;
+
+    color:white;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    box-shadow:0 0 20px rgba(59,130,246,0.4);
+
+    transition:0.3s;
+}
+
+.generate-btn:hover{
+    transform:translateY(-2px);
+}
+
+.loading{
+    display:none;
+    margin-top:20px;
+    color:#38bdf8;
+    font-size:15px;
+    font-weight:bold;
+}
+
+.features{
+    margin-top:20px;
+    color:#cbd5e1;
+    font-size:14px;
+}
+
+.ai-bot{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    font-size:40px;
+    animation:float 3s infinite;
+}
+
+</style>
+
+<script>
+
+function showLoading(){
+
+    document.getElementById("generateBtn").innerHTML =
+    "⏳ Processing Video...";
+
+    document.getElementById("loading").innerHTML =
+    `
+    🤖 AI Assistant Working<br><br>
+
+    ✅ Downloading Video<br>
+    ✅ Extracting Audio<br>
+    🔄 Transcribing Speech<br>
+    ⏳ Generating Notes<br>
+    ⏳ Creating Timeline<br>
+    ⏳ Building PDF
+    `;
+
+    document.getElementById("loading").style.display="block";
+}
+
+</script>
+
+</head>
+
+<body>
+
+<div class="glass-card">
+
+    <div class="logo">🚀</div>
+
+    <h1 class="title">
+        AI Video Learning Assistant
+    </h1>
+
+    <p class="subtitle">
+        Convert lectures, tutorials and YouTube videos into smart notes,
+        timelines, transcripts and downloadable PDFs.
+    </p>
+
+    <div class="stats">
+
+        <div class="stat-box">
+            <div class="stat-number">🎥</div>
+            <div>Video Ready</div>
+        </div>
+
+        <div class="stat-box">
+            <div class="stat-number">📝</div>
+            <div>Notes Ready</div>
+        </div>
+
+        <div class="stat-box">
+            <div class="stat-number">📄</div>
+            <div>PDF Ready</div>
+        </div>
+
+        <div class="stat-box">
+            <div class="stat-number">⚡</div>
+            <div>Fast Processing</div>
+        </div>
+
+    </div>
+
+    <form action="/upload"
+          method="POST"
+          enctype="multipart/form-data"
+          onsubmit="showLoading()">
+
+        <div class="mb-3">
+
+            <input
+                type="text"
+                name="youtube_url"
+                class="form-control"
+                placeholder="📺 Paste YouTube URL Here">
+
+        </div>
+
+        <div style="color:#cbd5e1; margin-bottom:12px;">
+            ───── OR UPLOAD A VIDEO ─────
+        </div>
+
+        <div class="upload-box">
+
+            <h5 style="color:white;">
+                📁 Drag & Drop Video Here
+            </h5>
+
+            <p style="color:#cbd5e1;font-size:14px;">
+                or Click Below To Browse
+            </p>
+
+            <input
+                type="file"
+                name="video"
+                accept="video/*"
+                class="form-control">
+
+        </div>
+
+        <button
+            id="generateBtn"
+            class="generate-btn">
+
+            🚀 Generate AI Notes
+
+        </button>
+
+    </form>
+
+    <div id="loading" class="loading"></div>
+
+    <div class="features">
+
+        ✨ Whisper AI &nbsp; | &nbsp;
+        🤖 Smart Notes &nbsp; | &nbsp;
+        📄 PDF Export &nbsp; | &nbsp;
+        ⏰ Timeline Generation
+
+    </div>
+
+</div>
+
+<div class="ai-bot">
+🤖
+</div>
+
+</body>
+</html>

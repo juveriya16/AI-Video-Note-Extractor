@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Results</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+body{
+    background:#0f172a;
+    color:white;
+    padding:40px;
+}
+
+.card{
+    background: rgba(30,41,59,0.75);
+    backdrop-filter: blur(12px);
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.1);
+    margin-bottom:25px;
+}
+
+.card-body{
+    color:white;
+}
+
+pre{
+    color:#e2e8f0;
+    white-space:pre-wrap;
+}
+
+.timeline-card{
+    cursor:pointer;
+    transition:0.4s;
+    min-height:220px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.timeline-card:hover{
+    transform:translateY(-10px) scale(1.03);
+    box-shadow:0px 15px 30px rgba(0,0,0,0.4);
+}
+
+.notes-card{
+    background: linear-gradient(135deg,#667eea,#764ba2);
+}
+
+.timeline-gradient{
+    background: linear-gradient(135deg,#f093fb,#f5576c);
+}
+
+.transcript-card{
+    background: linear-gradient(135deg,#43e97b,#38f9d7);
+}
+
+.pdf-card{
+    background: linear-gradient(135deg,#f6d365,#fda085);
+}
+
+.section-card{
+    animation: fadeIn 0.5s ease;
+}
+.notes-content{
+    background:#0f172a;
+    padding:25px;
+    border-radius:15px;
+    border-left:5px solid #38bdf8;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(20px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 class="mb-3 text-center fw-bold">
+        🚀 AI Video Notes Dashboard
+    </h1>
+
+    <div class="text-center mb-5">
+
+        <h2>🤖 AI Learning Assistant</h2>
+
+        <p>
+            Your video has been successfully processed.
+            Explore Notes, Timeline, Transcript and Download PDF.
+        </p>
+
+    </div>
+
+    <!-- DASHBOARD CARDS -->
+
+    <div class="row mb-4">
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card timeline-card notes-card text-center"
+                 onclick="showSection('notesSection')">
+
+                <div class="card-body">
+                    <h1>📝</h1>
+                    <h4>Notes</h4>
+                    <p>View Summary</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card timeline-card timeline-gradient text-center"
+                 onclick="showSection('timelineSection')">
+
+                <div class="card-body">
+                    <h1>⏰</h1>
+                    <h4>Timeline</h4>
+                    <p>Key Moments</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card timeline-card transcript-card text-center"
+                 onclick="showSection('transcriptSection')">
+
+                <div class="card-body">
+                    <h1>📄</h1>
+                    <h4>Transcript</h4>
+                    <p>Full Text</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card timeline-card pdf-card text-center"
+                 onclick="showSection('pdfSection')">
+
+                <div class="card-body">
+                    <h1>📥</h1>
+                    <h4>PDF</h4>
+                    <p>Download Notes</p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- NOTES -->
+
+    <div id="notesSection" class="section-card">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h3>📌 Notes & Summary</h3>
+
+                <div class="notes-content">
+                    <pre>{{ notes }}</pre>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TIMELINE -->
+
+    <div id="timelineSection" class="section-card" style="display:none;">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h3>⏰ Video Timeline</h3>
+
+                {% for item in timestamps %}
+                    <p>{{ item }}</p>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TRANSCRIPT -->
+
+    <div id="transcriptSection" class="section-card" style="display:none;">
+
+        <div class="card">
+            <div class="card-body">
+
+                <h3>📝 Transcript</h3>
+
+                <pre>{{ transcript }}</pre>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PDF -->
+
+    <div id="pdfSection" class="section-card" style="display:none;">
+
+        <div class="card">
+            <div class="card-body text-center">
+
+                <h3>📄 Download PDF</h3>
+
+                <br>
+
+                <a href="/download" class="btn btn-success btn-lg">
+                    Download PDF
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center mt-4">
+
+        <a href="/" class="btn btn-primary btn-lg">
+            Upload Another Video
+        </a>
+
+    </div>
+
+</div>
+
+<script>
+
+function showSection(sectionId){
+
+    document.getElementById("notesSection").style.display = "none";
+    document.getElementById("timelineSection").style.display = "none";
+    document.getElementById("transcriptSection").style.display = "none";
+    document.getElementById("pdfSection").style.display = "none";
+
+    document.getElementById(sectionId).style.display = "block";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Processing...</title>
+
+<style>
+
+body{
+    background:#0f172a;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Segoe UI;
+}
+
+.box{
+    text-align:center;
+}
+
+.loader{
+    border:6px solid #334155;
+    border-top:6px solid #38bdf8;
+    border-radius:50%;
+    width:70px;
+    height:70px;
+    animation:spin 1s linear infinite;
+    margin:auto;
+}
+
+@keyframes spin{
+    100%{
+        transform:rotate(360deg);
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <div class="loader"></div>
+
+    <h2>🤖 AI is Processing Your Video</h2>
+
+    <p>Downloading Video...</p>
+    <p>Extracting Audio...</p>
+    <p>Transcribing Speech...</p>
+    <p>Generating Notes...</p>
+
+</div>
+
+</body>
+</html>
